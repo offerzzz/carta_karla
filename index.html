@@ -1,482 +1,598 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¡Sorpresa para Karla! 🌸</title>
-<style>
-  :root{
-    --pink-1:#ffd6e8;
-    --pink-2:#ff9ec7;
-    --pink-3:#ff5fa2;
-    --pink-deep:#e13b83;
-    --cream:#fff5f9;
-    --yellow:#ffd23f;
-    --blue:#4fc3f7;
-    --dark:#5b2340;
-    --shadow:0 10px 30px rgba(225,59,131,0.25);
-  }
-  *{box-sizing:border-box;}
-  html,body{
-    margin:0;
-    padding:0;
-    height:100%;
-    font-family:'Trebuchet MS', 'Comic Sans MS', 'Segoe UI', sans-serif;
-    background:linear-gradient(160deg, var(--pink-1) 0%, var(--pink-2) 45%, var(--pink-3) 100%);
-    color:var(--dark);
-    overflow-x:hidden;
-  }
-  .stage{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-    position:relative;
-  }
-  .deco{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:0;
-  }
-  .deco span{
-    position:absolute;
-    font-size:22px;
-    opacity:.55;
-    animation:float 9s linear infinite;
-  }
-  @keyframes float{
-    from{transform:translateY(110vh) rotate(0deg);}
-    to{transform:translateY(-10vh) rotate(360deg);}
-  }
-  .screen{
-    position:relative;
-    z-index:1;
-    width:100%;
-    max-width:520px;
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    animation:pop .45s ease;
-  }
-  .screen.active{display:flex;}
-  @keyframes pop{
-    from{transform:scale(.85); opacity:0;}
-    to{transform:scale(1); opacity:1;}
-  }
-  h1,h2,h3{margin:.2em 0;}
-  .titlecard{
-    background:var(--cream);
-    border:6px solid var(--pink-3);
-    border-radius:28px;
-    padding:22px 20px;
-    box-shadow:var(--shadow);
-    width:100%;
-  }
-  .bubble{
-    background:#fff;
-    border:4px solid var(--pink-3);
-    border-radius:22px;
-    padding:16px 18px;
-    margin-top:14px;
-    font-size:1.05rem;
-    line-height:1.4;
-    position:relative;
-    box-shadow:0 6px 14px rgba(0,0,0,0.08);
-  }
-  .bubble::after{
-    content:"";
-    position:absolute;
-    top:-14px;
-    left:38px;
-    border-width:0 12px 14px 12px;
-    border-style:solid;
-    border-color:transparent transparent var(--pink-3) transparent;
-  }
-  button{
-    font-family:inherit;
-    cursor:pointer;
-    border:none;
-    border-radius:999px;
-    padding:14px 26px;
-    font-size:1.05rem;
-    font-weight:700;
-    margin:8px 6px;
-    box-shadow:0 6px 0 rgba(0,0,0,0.12);
-    transition:transform .12s ease, box-shadow .12s ease;
-  }
-  button:active{
-    transform:translateY(4px);
-    box-shadow:0 2px 0 rgba(0,0,0,0.12);
-  }
-  .btn-main{background:var(--pink-3); color:#fff;}
-  .btn-menu{background:#fff; color:var(--pink-deep); border:3px solid var(--pink-3); display:block; width:100%; max-width:320px; margin:10px auto;}
-  .btn-yellow{background:var(--yellow); color:var(--dark);}
-  .btn-blue{background:var(--blue); color:#fff;}
-  .btn-back{background:transparent; color:var(--pink-deep); border:2px dashed var(--pink-3); box-shadow:none; margin-top:22px;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El rincón divertido de Shin-Chan & Karla</title>
+  <style>
+    :root {
+      --shin-pink-bg: #ffb7c5;
+      --shin-pink-card: #ffe4e9;
+      --shin-pink-accent: #ff6584;
+      --shin-red: #ff3344;
+      --shin-yellow: #ffde00;
+      --shin-blue: #4cc9f0;
+      --shin-choco: #7b4397;
+      --shin-skin: #ffd8b8;
+      --shin-ink: #222222;
+      --shin-green: #2ec4b6;
+    }
 
-  .char-wrap{width:200px; margin:0 auto 6px;}
-  .char-wrap svg{width:100%; height:auto; display:block; filter:drop-shadow(0 8px 10px rgba(0,0,0,.18));}
-  .bounce{animation:bounce 1.6s ease-in-out infinite;}
-  @keyframes bounce{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-10px);}
-  }
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
 
-  .menu-list{width:100%; margin-top:10px;}
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: radial-gradient(circle at center, #ffe0e9 0%, #ffb7c5 100%);
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-  #gameArea{
-    position:relative;
-    width:100%;
-    height:320px;
-    background:#fff;
-    border:5px dashed var(--pink-3);
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:10px;
-    touch-action:none;
-  }
-  .fry{
-    position:absolute;
-    width:38px;
-    height:38px;
-    cursor:pointer;
-    user-select:none;
-    animation:pulseFry .9s ease-in-out infinite;
-  }
-  @keyframes pulseFry{
-    0%,100%{transform:scale(1);}
-    50%{transform:scale(1.12);}
-  }
-  #score{font-size:1.3rem; font-weight:800; color:var(--pink-deep); margin-top:8px;}
-  #timeLeft{font-weight:700;}
+    .bg-deco {
+      position: absolute;
+      pointer-events: none;
+      font-size: 2rem;
+      opacity: 0.35;
+      animation: floatItem 6s ease-in-out infinite alternate;
+    }
+    @keyframes floatItem {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-20px) rotate(15deg); }
+    }
 
-  .lesson-card{
-    background:#fff;
-    border:4px solid var(--blue);
-    border-radius:18px;
-    padding:16px;
-    margin-top:12px;
-    text-align:left;
-    width:100%;
-  }
-  .lesson-card h3{color:var(--pink-deep); margin-top:0;}
-  .circuit-svg{width:100%; max-width:420px; margin:10px auto; display:block; background:#fdfdfd; border-radius:12px; border:2px solid #eee;}
-  .tab-buttons{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:6px;}
-  .tab-btn{background:#eef7ff; color:#0d6f9e; border:2px solid var(--blue); padding:8px 14px; border-radius:999px; font-size:.9rem; box-shadow:none;}
-  .tab-btn.selected{background:var(--blue); color:#fff;}
-  .tab-content{display:none;}
-  .tab-content.active{display:block;}
+    .card-container {
+      width: 100%;
+      max-width: 540px;
+      background: #ffffff;
+      border: 5px solid var(--shin-ink);
+      border-radius: 32px;
+      padding: 26px 20px;
+      box-shadow: 10px 10px 0px var(--shin-ink);
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
 
-  .credits-box{
-    background:#fff;
-    border:6px solid var(--pink-3);
-    border-radius:24px;
-    padding:30px 20px;
-    margin-top:14px;
-  }
-  .heart{color:var(--pink-deep); font-size:1.4rem;}
-  footer.small{margin-top:10px; font-size:.75rem; opacity:.6;}
-</style>
+    .screen {
+      display: none;
+      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Shin-chan CSS puro */
+    .shinchan-avatar {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 12px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .shinchan-avatar:hover {
+      transform: scale(1.08) rotate(3deg);
+    }
+    .shin-head {
+      width: 110px;
+      height: 90px;
+      background: var(--shin-skin);
+      border: 4px solid var(--shin-ink);
+      border-radius: 50% 60% 45% 65% / 60% 50% 65% 50%;
+      position: absolute;
+      top: 20px;
+      left: 15px;
+      z-index: 2;
+    }
+    .shin-hair {
+      position: absolute;
+      top: 14px;
+      left: 12px;
+      width: 115px;
+      height: 55px;
+      background: var(--shin-ink);
+      border-radius: 60% 60% 20% 20%;
+      z-index: 1;
+    }
+    .shin-eyebrow-l, .shin-eyebrow-r {
+      position: absolute;
+      width: 28px;
+      height: 14px;
+      background: var(--shin-ink);
+      border-radius: 12px 12px 0 0;
+      top: 26px;
+      z-index: 3;
+    }
+    .shin-eyebrow-l { left: 30px; transform: rotate(-10deg); }
+    .shin-eyebrow-r { left: 70px; transform: rotate(10deg); }
+    .shin-eye-l, .shin-eye-r {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: var(--shin-ink);
+      border-radius: 50%;
+      top: 44px;
+      z-index: 3;
+    }
+    .shin-eye-l { left: 40px; }
+    .shin-eye-r { left: 74px; }
+    .shin-eye-l::after, .shin-eye-r::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      top: 2px;
+      left: 3px;
+    }
+    .shin-blush-l, .shin-blush-r {
+      position: absolute;
+      width: 18px;
+      height: 10px;
+      background: #ff758f;
+      border-radius: 50%;
+      top: 58px;
+      z-index: 3;
+      opacity: 0.7;
+    }
+    .shin-blush-l { left: 24px; }
+    .shin-blush-r { left: 86px; }
+    .shin-mouth {
+      position: absolute;
+      width: 18px;
+      height: 12px;
+      border-bottom: 3px solid var(--shin-ink);
+      border-radius: 0 0 12px 12px;
+      top: 60px;
+      left: 55px;
+      z-index: 3;
+    }
+    .prof-glasses {
+      position: absolute;
+      top: 38px;
+      left: 28px;
+      width: 72px;
+      height: 24px;
+      border: 3px solid #111;
+      border-radius: 6px;
+      z-index: 4;
+      background: rgba(255,255,255,0.4);
+      display: none;
+    }
+    .prof-tie {
+      position: absolute;
+      top: 105px;
+      left: 60px;
+      width: 18px;
+      height: 30px;
+      background: var(--shin-blue);
+      border: 3px solid var(--shin-ink);
+      clip-path: polygon(25% 0%, 75% 0%, 100% 70%, 50% 100%, 0% 70%);
+      z-index: 5;
+      display: none;
+    }
+
+    /* Bocadillo */
+    .speech-bubble {
+      background: var(--shin-pink-card);
+      border: 4px solid var(--shin-ink);
+      border-radius: 22px;
+      padding: 16px;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--shin-ink);
+      position: relative;
+      margin: 15px auto 20px;
+      box-shadow: 4px 4px 0px var(--shin-ink);
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 14px 16px 14px;
+      border-style: solid;
+      border-color: var(--shin-pink-card) transparent;
+      display: block;
+      width: 0;
+      z-index: 2;
+    }
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      top: -21px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 17px 20px 17px;
+      border-style: solid;
+      border-color: var(--shin-ink) transparent;
+      display: block;
+      width: 0;
+      z-index: 1;
+    }
+
+    /* Botones */
+    .btn-shin {
+      width: 100%;
+      padding: 14px 18px;
+      margin: 10px 0;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--shin-ink);
+      background: var(--shin-yellow);
+      border: 4px solid var(--shin-ink);
+      border-radius: 20px;
+      box-shadow: 5px 5px 0px var(--shin-ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.1s ease;
+    }
+    .btn-shin:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0px var(--shin-ink);
+    }
+    .btn-shin:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0px var(--shin-ink);
+    }
+    .btn-pink { background: #ff8fa3; color: white; }
+    .btn-red { background: var(--shin-red); color: white; }
+    .btn-blue { background: var(--shin-blue); color: var(--shin-ink); }
+    .btn-green { background: var(--shin-green); color: white; }
+    .btn-back {
+      background: #eee;
+      width: auto;
+      display: inline-flex;
+      padding: 8px 20px;
+      font-size: 0.95rem;
+      margin-top: 15px;
+    }
+
+    /* Mini Juego */
+    .game-area {
+      height: 240px;
+      background: #f8f9fa;
+      border: 4px solid var(--shin-ink);
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+      margin: 15px 0;
+      background-image: radial-gradient(#ffccd5 15%, transparent 16%);
+      background-size: 20px 20px;
+    }
+    .chocobi-box {
+      width: 46px;
+      height: 46px;
+      background: #52b788;
+      border: 3px solid var(--shin-ink);
+      border-radius: 8px;
+      position: absolute;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 3px 3px 0px var(--shin-ink);
+    }
+
+    /* Circuitos */
+    .circuit-card {
+      background: #fff;
+      border: 3px solid var(--shin-ink);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 14px;
+      text-align: left;
+      box-shadow: 4px 4px 0px var(--shin-pink-accent);
+    }
+    .circuit-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--shin-red);
+      margin-bottom: 6px;
+    }
+    .circuit-desc {
+      font-size: 0.9rem;
+      color: #333;
+      line-height: 1.4;
+    }
+    .circuit-formula {
+      background: #f0f3f6;
+      border: 2px dashed var(--shin-ink);
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin-top: 6px;
+      font-weight: bold;
+      font-family: monospace;
+      font-size: 0.95rem;
+      color: #0b525b;
+    }
+
+    /* Tarjeta del autor */
+    .author-badge {
+      background: var(--shin-yellow);
+      border: 4px solid var(--shin-ink);
+      border-radius: 20px;
+      padding: 20px;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--shin-ink);
+      box-shadow: 6px 6px 0px var(--shin-pink-accent);
+      margin: 20px 0;
+    }
+  </style>
 </head>
 <body>
 
-<div class="deco" id="decoLayer"></div>
+  <div class="bg-deco" style="top: 8%; left: 8%;">🦖 Chocobi</div>
+  <div class="bg-deco" style="bottom: 10%; left: 10%;">⭐</div>
+  <div class="bg-deco" style="top: 15%; right: 8%;">✨ Acción Ninja</div>
+  <div class="bg-deco" style="bottom: 12%; right: 12%;">🌸</div>
 
-<!-- SCREEN 0: Portada, clic para aparecer -->
-<div class="screen active" id="screen-intro">
-  <div class="titlecard" id="introCard">
-    <h1>🌸 Toca la pantalla 🌸</h1>
-    <p>Hay alguien esperando para saludarte...</p>
-    <button class="btn-main" onclick="revealShin()">👉 Toca aquí</button>
+  <div class="card-container">
+    
+    <!-- PANTALLA 1: INICIO -->
+    <div id="screen-start" class="screen active">
+      <div style="font-size: 3rem; margin-bottom: 10px;">🎁</div>
+      <h2 style="color: var(--shin-pink-accent); -webkit-text-stroke: 1px var(--shin-ink); font-size: 1.7rem; margin: 0 0 10px;">
+        ¡Tienes una sorpresa!
+      </h2>
+      <p style="font-weight: bold; color: #555; margin-bottom: 20px;">
+        Haz clic en el botón de abajo para descubrir quién vino a visitarte:
+      </p>
+      <button class="btn-shin btn-pink" onclick="changeScreen('screen-greeting')">
+        <span>👉</span> ¡Toca aquí! <span>✨</span>
+      </button>
+    </div>
+
+    <!-- PANTALLA 2: SALUDO DE SHIN-CHAN A KARLA -->
+    <div id="screen-greeting" class="screen">
+      <div class="shinchan-avatar" onclick="changeScreen('screen-menu')">
+        <div class="shin-hair"></div>
+        <div class="shin-head">
+          <div class="shin-eyebrow-l"></div>
+          <div class="shin-eyebrow-r"></div>
+          <div class="shin-eye-l"></div>
+          <div class="shin-eye-r"></div>
+          <div class="shin-blush-l"></div>
+          <div class="shin-blush-r"></div>
+          <div class="shin-mouth"></div>
+        </div>
+      </div>
+
+      <div class="speech-bubble" onclick="changeScreen('screen-menu')" style="cursor: pointer;">
+        "Hola, que gusto conocerte Karla :&gt; dame clic para ver lo que tengo"
+      </div>
+
+      <button class="btn-shin btn-red" onclick="changeScreen('screen-menu')">
+        <span>👉</span> ¡Dame clic para ver lo que tengo!
+      </button>
+    </div>
+
+    <!-- PANTALLA 3: MENÚ PRINCIPAL -->
+    <div id="screen-menu" class="screen">
+      <h2 style="color: var(--shin-red); margin: 0 0 15px; text-shadow: 2px 2px 0px var(--shin-yellow); font-size: 1.6rem;">
+        ¿Qué hacemos, Karla?
+      </h2>
+
+      <button class="btn-shin btn-yellow" onclick="openGameScreen()">
+        <span>🎮</span> Juega un rato conmigo
+      </button>
+
+      <button class="btn-shin btn-blue" onclick="changeScreen('screen-study')">
+        <span>📚</span> Estudiemos juntos
+      </button>
+
+      <button class="btn-shin btn-pink" onclick="changeScreen('screen-author')">
+        <span>💖</span> ¿Quién lo hizo?
+      </button>
+    </div>
+
+    <!-- PANTALLA 4: MINI JUEGO -->
+    <div id="screen-game" class="screen">
+      <h3 style="margin: 0; color: var(--shin-choco);">⭐ ¡Atrapa las Galletas Chocobi!</h3>
+      <p style="font-size: 0.9rem; margin: 6px 0; font-weight: bold;">Toca tantas galletas Chocobi como puedas:</p>
+      
+      <div style="display: flex; justify-content: space-around; font-weight: 900; margin-bottom: 5px;">
+        <span style="color: var(--shin-red);">Puntos: <span id="score-val">0</span></span>
+        <span style="color: var(--shin-blue);">Tiempo: <span id="time-val">15</span>s</span>
+      </div>
+
+      <div class="game-area" id="game-box">
+        <div id="chocobi-target" class="chocobi-box" onclick="catchChocobi()">🦖</div>
+      </div>
+
+      <button id="btn-start-game" class="btn-shin btn-green" onclick="startGame()">
+        ¡Comenzar a jugar!
+      </button>
+
+      <button class="btn-shin btn-back" onclick="changeScreen('screen-menu')">
+        ⬅ Volver al menú
+      </button>
+    </div>
+
+    <!-- PANTALLA 5: ESTUDIEMOS JUNTOS -->
+    <div id="screen-study" class="screen">
+      <div class="shinchan-avatar" style="transform: scale(0.9); margin-bottom: 5px;">
+        <div class="shin-hair"></div>
+        <div class="shin-head">
+          <div class="shin-eyebrow-l"></div>
+          <div class="shin-eyebrow-r"></div>
+          <div class="prof-glasses" style="display: block;"></div>
+          <div class="shin-eye-l"></div>
+          <div class="shin-eye-r"></div>
+          <div class="shin-blush-l"></div>
+          <div class="shin-blush-r"></div>
+          <div class="shin-mouth"></div>
+        </div>
+        <div class="prof-tie" style="display: block;"></div>
+      </div>
+
+      <div class="speech-bubble" style="font-size: 0.95rem; padding: 10px; margin: 8px 0 14px;">
+        "¡Abran sus cuadernos! El Profesor Shinnosuke les enseñará la teoría de circuitos eléctricos ⚡"
+      </div>
+
+      <div style="max-height: 270px; overflow-y: auto; padding-right: 4px;">
+        <div class="circuit-card">
+          <div class="circuit-title">1. Circuito en Serie 🔌</div>
+          <div class="circuit-desc">Un único camino continuo para la corriente eléctrica.</div>
+          <div class="circuit-formula">
+            • Corriente: I_total = I1 = I2 = I3<br>
+            • Voltaje: V_total = V1 + V2 + V3<br>
+            • Resistencia: R_eq = R1 + R2 + R3
+          </div>
+        </div>
+
+        <div class="circuit-card">
+          <div class="circuit-title">2. Circuito en Paralelo 🔀</div>
+          <div class="circuit-desc">Múltiples caminos donde todos los elementos reciben el mismo voltaje.</div>
+          <div class="circuit-formula">
+            • Voltaje: V_total = V1 = V2 = V3<br>
+            • Corriente: I_total = I1 + I2 + I3<br>
+            • Resistencia: 1/R_eq = 1/R1 + 1/R2 + 1/R3
+          </div>
+        </div>
+
+        <div class="circuit-card">
+          <div class="circuit-title">3. Circuito Mixto 🧩</div>
+          <div class="circuit-desc">Combina conexiones en serie y paralelo en una misma red eléctrica.</div>
+          <div class="circuit-formula">
+            • Estrategia: Reducir primero las ramas en paralelo y luego sumar las resistencias en serie.
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-shin btn-back" onclick="changeScreen('screen-menu')">
+        ⬅ Volver al menú
+      </button>
+    </div>
+
+    <!-- PANTALLA 6: QUIÉN LO HIZO -->
+    <div id="screen-author" class="screen">
+      <div class="shinchan-avatar">
+        <div class="shin-hair"></div>
+        <div class="shin-head">
+          <div class="shin-eyebrow-l"></div>
+          <div class="shin-eyebrow-r"></div>
+          <div class="shin-eye-l"></div>
+          <div class="shin-eye-r"></div>
+          <div class="shin-blush-l" style="width: 22px; height: 14px; background: #ff4d6d;"></div>
+          <div class="shin-blush-r" style="width: 22px; height: 14px; background: #ff4d6d;"></div>
+          <div class="shin-mouth" style="border-radius: 50%;"></div>
+        </div>
+      </div>
+
+      <div class="author-badge">
+        <div style="font-size: 2rem; margin-bottom: 8px;">💌 ✨</div>
+        Hecho con cariño por Offer
+        <div style="font-size: 0.95rem; margin-top: 8px; font-weight: normal; color: #444;">
+          ¡Para alegrarte el día y estudiar con estilo! 🦖🎈
+        </div>
+      </div>
+
+      <button class="btn-shin btn-back" onclick="changeScreen('screen-menu')">
+        ⬅ Volver al menú
+      </button>
+    </div>
+
   </div>
 
-  <div id="shinReveal" style="display:none; margin-top:18px; width:100%;">
-    <div class="char-wrap bounce">
-      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="100" cy="185" rx="55" ry="28" fill="#ffd23f"/>
-        <circle cx="100" cy="105" r="70" fill="#ffe0b2"/>
-        <path d="M40 90 Q30 40 70 45 Q80 20 100 40 Q120 15 130 45 Q170 35 160 90 Q100 60 40 90Z" fill="#3a2a1a"/>
-        <rect x="58" y="95" width="30" height="8" rx="3" fill="#3a2a1a" transform="rotate(-6 58 95)"/>
-        <rect x="112" y="95" width="30" height="8" rx="3" fill="#3a2a1a" transform="rotate(6 142 95)"/>
-        <circle cx="75" cy="112" r="7" fill="#2b2b2b"/>
-        <circle cx="125" cy="112" r="7" fill="#2b2b2b"/>
-        <circle cx="62" cy="128" r="8" fill="#ff9ec7" opacity="0.7"/>
-        <circle cx="138" cy="128" r="8" fill="#ff9ec7" opacity="0.7"/>
-        <path d="M78 138 Q100 158 122 138" stroke="#a13a3a" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <rect x="60" y="160" width="80" height="35" rx="10" fill="#ff5fa2"/>
-        <rect x="60" y="172" width="80" height="6" fill="#fff"/>
-      </svg>
-    </div>
-    <div class="bubble">
-      ¡Hola, qué gusto conocerte Karla! :&gt;<br>Dame clic para ver lo que tengo 🎁
-    </div>
-    <button class="btn-main" onclick="goTo('screen-menu')" style="margin-top:14px;">Clic aquí 💗</button>
-  </div>
-</div>
+  <script>
+    var gameTimer = null;
+    var score = 0;
+    var timeLeft = 15;
+    var isPlaying = false;
 
-<!-- SCREEN 1: Menu -->
-<div class="screen" id="screen-menu">
-  <div class="titlecard">
-    <div class="char-wrap" style="width:130px;">
-      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="100" cy="185" rx="55" ry="28" fill="#ffd23f"/>
-        <circle cx="100" cy="105" r="70" fill="#ffe0b2"/>
-        <path d="M40 90 Q30 40 70 45 Q80 20 100 40 Q120 15 130 45 Q170 35 160 90 Q100 60 40 90Z" fill="#3a2a1a"/>
-        <rect x="58" y="95" width="30" height="8" rx="3" fill="#3a2a1a" transform="rotate(-6 58 95)"/>
-        <rect x="112" y="95" width="30" height="8" rx="3" fill="#3a2a1a" transform="rotate(6 142 95)"/>
-        <circle cx="75" cy="112" r="7" fill="#2b2b2b"/>
-        <circle cx="125" cy="112" r="7" fill="#2b2b2b"/>
-        <circle cx="62" cy="128" r="8" fill="#ff9ec7" opacity="0.7"/>
-        <circle cx="138" cy="128" r="8" fill="#ff9ec7" opacity="0.7"/>
-        <path d="M80 140 Q100 150 120 140" stroke="#a13a3a" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <rect x="60" y="160" width="80" height="35" rx="10" fill="#ff5fa2"/>
-        <rect x="60" y="172" width="80" height="6" fill="#fff"/>
-      </svg>
-    </div>
-    <h2>¿Qué quieres hacer? 🌸</h2>
-    <div class="menu-list">
-      <button class="btn-menu" onclick="startGame()">🎮 Juega un rato conmigo</button>
-      <button class="btn-menu" onclick="goTo('screen-study')">📘 Estudiemos juntos</button>
-      <button class="btn-menu" onclick="goTo('screen-credits')">❓ ¿Quién lo hizo?</button>
-    </div>
-  </div>
-</div>
-
-<!-- SCREEN 2: Mini juego -->
-<div class="screen" id="screen-game">
-  <div class="titlecard">
-    <h2>🍟 ¡Atrapa las papas de Shin-chan! 🍟</h2>
-    <p>Toca las papitas antes de que se acaben los <span id="timeLeft">20</span>s</p>
-    <div id="gameArea"></div>
-    <div id="score">Puntos: 0</div>
-    <button class="btn-yellow" onclick="startGame()" style="margin-top:10px;">🔁 Jugar de nuevo</button>
-    <button class="btn-back" onclick="goTo('screen-menu')">⬅ Volver al menú</button>
-  </div>
-</div>
-
-<!-- SCREEN 3: Estudiemos juntos -->
-<div class="screen" id="screen-study">
-  <div class="titlecard" style="max-width:560px;">
-    <div class="char-wrap" style="width:110px;">
-      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="100" cy="185" rx="55" ry="28" fill="#4fc3f7"/>
-        <circle cx="100" cy="105" r="70" fill="#ffe0b2"/>
-        <path d="M40 90 Q30 40 70 45 Q80 20 100 40 Q120 15 130 45 Q170 35 160 90 Q100 60 40 90Z" fill="#3a2a1a"/>
-        <rect x="58" y="95" width="30" height="8" rx="3" fill="#3a2a1a" transform="rotate(-6 58 95)"/>
-        <rect x="112" y="95" width="30" height="8" rx="3" fill="#3a2a1a" transform="rotate(6 142 95)"/>
-        <circle cx="75" cy="112" r="7" fill="#2b2b2b"/>
-        <circle cx="125" cy="112" r="7" fill="#2b2b2b"/>
-        <rect x="55" y="100" width="90" height="20" rx="10" fill="none" stroke="#333" stroke-width="3"/>
-        <path d="M85 140 Q100 146 115 140" stroke="#a13a3a" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <rect x="60" y="160" width="80" height="35" rx="10" fill="#4fc3f7"/>
-        <rect x="82" y="160" width="10" height="35" fill="#fff"/>
-      </svg>
-    </div>
-    <h2>👨‍🏫 Profesor Shin-chan explica circuitos</h2>
-    <div class="tab-buttons">
-      <button class="tab-btn selected" onclick="showTab('serie')" id="tabbtn-serie">Serie</button>
-      <button class="tab-btn" onclick="showTab('paralelo')" id="tabbtn-paralelo">Paralelo</button>
-      <button class="tab-btn" onclick="showTab('mixto')" id="tabbtn-mixto">Mixto</button>
-    </div>
-
-    <div class="lesson-card tab-content active" id="tab-serie">
-      <h3>🔗 Circuito en Serie</h3>
-      <svg class="circuit-svg" viewBox="0 0 400 100">
-        <line x1="20" y1="50" x2="90" y2="50" stroke="#333" stroke-width="3"/>
-        <rect x="90" y="35" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <line x1="130" y1="50" x2="180" y2="50" stroke="#333" stroke-width="3"/>
-        <rect x="180" y="35" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <line x1="220" y1="50" x2="270" y2="50" stroke="#333" stroke-width="3"/>
-        <rect x="270" y="35" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <line x1="310" y1="50" x2="380" y2="50" stroke="#333" stroke-width="3"/>
-        <line x1="20" y1="50" x2="20" y2="80" stroke="#333" stroke-width="3"/>
-        <line x1="380" y1="50" x2="380" y2="80" stroke="#333" stroke-width="3"/>
-        <line x1="20" y1="80" x2="380" y2="80" stroke="#333" stroke-width="3"/>
-        <text x="105" y="30" font-size="11" fill="#333">R1</text>
-        <text x="195" y="30" font-size="11" fill="#333">R2</text>
-        <text x="285" y="30" font-size="11" fill="#333">R3</text>
-      </svg>
-      <p>Las resistencias están una tras otra, formando un solo camino para la corriente. Todas comparten la <b>misma corriente (I)</b>, pero cada una tiene su propia caída de voltaje.</p>
-      <ul>
-        <li><b>Resistencia total:</b> R_T = R1 + R2 + R3 + ...</li>
-        <li><b>Corriente:</b> I es igual en todo el circuito</li>
-        <li><b>Voltaje:</b> V_T = V1 + V2 + V3 + ...</li>
-        <li>Si una resistencia se daña o se abre, ¡todo el circuito deja de funcionar! (como una fila de foquitos de navidad)</li>
-      </ul>
-    </div>
-
-    <div class="lesson-card tab-content" id="tab-paralelo">
-      <h3>🪜 Circuito en Paralelo</h3>
-      <svg class="circuit-svg" viewBox="0 0 400 140">
-        <line x1="20" y1="20" x2="380" y2="20" stroke="#333" stroke-width="3"/>
-        <line x1="20" y1="120" x2="380" y2="120" stroke="#333" stroke-width="3"/>
-        <line x1="20" y1="20" x2="20" y2="120" stroke="#333" stroke-width="3"/>
-        <line x1="380" y1="20" x2="380" y2="120" stroke="#333" stroke-width="3"/>
-        <line x1="100" y1="20" x2="100" y2="45" stroke="#333" stroke-width="3"/>
-        <rect x="80" y="45" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <line x1="100" y1="75" x2="100" y2="120" stroke="#333" stroke-width="3"/>
-        <text x="85" y="40" font-size="11" fill="#333">R1</text>
-        <line x1="200" y1="20" x2="200" y2="45" stroke="#333" stroke-width="3"/>
-        <rect x="180" y="45" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <line x1="200" y1="75" x2="200" y2="120" stroke="#333" stroke-width="3"/>
-        <text x="185" y="40" font-size="11" fill="#333">R2</text>
-        <line x1="300" y1="20" x2="300" y2="45" stroke="#333" stroke-width="3"/>
-        <rect x="280" y="45" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <line x1="300" y1="75" x2="300" y2="120" stroke="#333" stroke-width="3"/>
-        <text x="285" y="40" font-size="11" fill="#333">R3</text>
-      </svg>
-      <p>Las resistencias están cada una en su propia rama, todas conectadas entre los dos mismos puntos (nodos). Todas comparten el <b>mismo voltaje (V)</b>, pero la corriente se reparte entre las ramas.</p>
-      <ul>
-        <li><b>Resistencia total:</b> 1/R_T = 1/R1 + 1/R2 + 1/R3 + ...</li>
-        <li><b>Voltaje:</b> V es igual en cada rama</li>
-        <li><b>Corriente:</b> I_T = I1 + I2 + I3 + ...</li>
-        <li>Si una rama se daña, las demás siguen funcionando (como los focos de tu casa)</li>
-      </ul>
-    </div>
-
-    <div class="lesson-card tab-content" id="tab-mixto">
-      <h3>🧩 Circuito Mixto</h3>
-      <svg class="circuit-svg" viewBox="0 0 400 140">
-        <line x1="20" y1="70" x2="70" y2="70" stroke="#333" stroke-width="3"/>
-        <rect x="70" y="55" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <text x="75" y="50" font-size="11" fill="#333">R1</text>
-        <line x1="110" y1="70" x2="150" y2="70" stroke="#333" stroke-width="3"/>
-        <line x1="150" y1="20" x2="150" y2="120" stroke="#333" stroke-width="3"/>
-        <line x1="150" y1="20" x2="250" y2="20" stroke="#333" stroke-width="3"/>
-        <line x1="150" y1="120" x2="250" y2="120" stroke="#333" stroke-width="3"/>
-        <rect x="180" y="5" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <text x="183" y="4" font-size="11" fill="#333">R2</text>
-        <rect x="180" y="105" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <text x="183" y="150" font-size="11" fill="#333">R3</text>
-        <line x1="250" y1="20" x2="250" y2="120" stroke="#333" stroke-width="3"/>
-        <line x1="250" y1="70" x2="290" y2="70" stroke="#333" stroke-width="3"/>
-        <rect x="290" y="55" width="40" height="30" fill="none" stroke="#e13b83" stroke-width="3"/>
-        <text x="293" y="50" font-size="11" fill="#333">R4</text>
-        <line x1="330" y1="70" x2="380" y2="70" stroke="#333" stroke-width="3"/>
-      </svg>
-      <p>Combina partes en serie y partes en paralelo dentro del mismo circuito. Para resolverlo:</p>
-      <ol>
-        <li>Identifica primero los grupos en paralelo (como R2 y R3) y calcula su resistencia equivalente.</li>
-        <li>Ese resultado ahora se trata como una sola resistencia en serie con las demás (R1 y R4).</li>
-        <li>Suma todo como en un circuito en serie para obtener R_T.</li>
-        <li>Luego usa la Ley de Ohm (V = I × R) para hallar corrientes y voltajes de cada parte, trabajando "de afuera hacia adentro".</li>
-      </ol>
-      <p>💡 Truco de Shin-chan: simplifica el circuito por partes, como si fueras armando un Kamen Rider por piezas, ¡hasta que quede una sola resistencia!</p>
-    </div>
-
-    <button class="btn-back" onclick="goTo('screen-menu')">⬅ Volver al menú</button>
-  </div>
-</div>
-
-<!-- SCREEN 4: Creditos -->
-<div class="screen" id="screen-credits">
-  <div class="credits-box">
-    <div class="char-wrap" style="width:120px;">
-      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="100" cy="185" rx="55" ry="28" fill="#ff5fa2"/>
-        <circle cx="100" cy="105" r="70" fill="#ffe0b2"/>
-        <path d="M40 90 Q30 40 70 45 Q80 20 100 40 Q120 15 130 45 Q170 35 160 90 Q100 60 40 90Z" fill="#3a2a1a"/>
-        <rect x="58" y="95" width="30" height="8" rx="3" fill="#3a2a1a" transform="rotate(-6 58 95)"/>
-        <rect x="112" y="95" width="30" height="8" rx="3" fill="#3a2a1a" transform="rotate(6 142 95)"/>
-        <path d="M70 108 Q75 100 80 108" stroke="#2b2b2b" stroke-width="3" fill="none"/>
-        <path d="M120 108 Q125 100 130 108" stroke="#2b2b2b" stroke-width="3" fill="none"/>
-        <circle cx="62" cy="128" r="8" fill="#ff9ec7" opacity="0.7"/>
-        <circle cx="138" cy="128" r="8" fill="#ff9ec7" opacity="0.7"/>
-        <path d="M78 138 Q100 158 122 138" stroke="#a13a3a" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <rect x="60" y="160" width="80" height="35" rx="10" fill="#ff5fa2"/>
-        <rect x="60" y="172" width="80" height="6" fill="#fff"/>
-      </svg>
-    </div>
-    <h2>Hecho con <span class="heart">♥</span> por Offer</h2>
-    <p>Para Karla, con cariño 🌸</p>
-    <button class="btn-back" onclick="goTo('screen-menu')">⬅ Volver al menú</button>
-  </div>
-</div>
-
-<script>
-function goTo(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-function revealShin(){
-  document.getElementById('introCard').style.display = 'none';
-  document.getElementById('shinReveal').style.display = 'block';
-}
-
-(function(){
-  const layer = document.getElementById('decoLayer');
-  const symbols = ['💗','⭐','🌸','💛'];
-  for(let i=0;i<16;i++){
-    const s = document.createElement('span');
-    s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
-    s.style.left = Math.random()*100 + 'vw';
-    s.style.animationDuration = (6+Math.random()*8) + 's';
-    s.style.animationDelay = (Math.random()*8) + 's';
-    layer.appendChild(s);
-  }
-})();
-
-function showTab(name){
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('selected'));
-  document.getElementById('tab-'+name).classList.add('active');
-  document.getElementById('tabbtn-'+name).classList.add('selected');
-}
-
-let gameScore = 0;
-let gameTimer = null;
-let spawnTimer = null;
-let timeRemaining = 20;
-
-function startGame(){
-  goTo('screen-game');
-  const area = document.getElementById('gameArea');
-  area.innerHTML = '';
-  gameScore = 0;
-  timeRemaining = 20;
-  document.getElementById('score').textContent = 'Puntos: 0';
-  document.getElementById('timeLeft').textContent = timeRemaining;
-
-  if(gameTimer) clearInterval(gameTimer);
-  if(spawnTimer) clearInterval(spawnTimer);
-
-  spawnTimer = setInterval(spawnFry, 700);
-  gameTimer = setInterval(() => {
-    timeRemaining--;
-    document.getElementById('timeLeft').textContent = timeRemaining;
-    if(timeRemaining <= 0){
-      clearInterval(gameTimer);
-      clearInterval(spawnTimer);
-      area.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:1.3rem;font-weight:800;color:#e13b83;text-align:center;padding:10px;">¡Tiempo! 🍟<br>Puntos finales: '+gameScore+'</div>';
+    function changeScreen(screenId) {
+      if (gameTimer) {
+        clearInterval(gameTimer);
+        gameTimer = null;
+      }
+      var screens = document.querySelectorAll('.screen');
+      for (var i = 0; i < screens.length; i++) {
+        screens[i].classList.remove('active');
+      }
+      var target = document.getElementById(screenId);
+      if (target) {
+        target.classList.add('active');
+      }
     }
-  }, 1000);
-}
 
-function spawnFry(){
-  const area = document.getElementById('gameArea');
-  if(!area || timeRemaining <= 0) return;
-  const fry = document.createElement('div');
-  fry.className = 'fry';
-  fry.innerHTML = '🍟';
-  fry.style.fontSize = '30px';
-  const maxX = area.clientWidth - 40;
-  const maxY = area.clientHeight - 40;
-  fry.style.left = Math.max(0, Math.random()*maxX) + 'px';
-  fry.style.top = Math.max(0, Math.random()*maxY) + 'px';
-  fry.onclick = () => {
-    gameScore++;
-    document.getElementById('score').textContent = 'Puntos: ' + gameScore;
-    fry.remove();
-  };
-  area.appendChild(fry);
-  setTimeout(() => { if(fry.parentNode) fry.remove(); }, 1400);
-}
-</script>
+    function openGameScreen() {
+      changeScreen('screen-game');
+      score = 0;
+      timeLeft = 15;
+      isPlaying = false;
+      document.getElementById('score-val').innerText = score;
+      document.getElementById('time-val').innerText = timeLeft;
+      document.getElementById('btn-start-game').style.display = 'flex';
+      document.getElementById('btn-start-game').innerText = '¡Comenzar a jugar!';
+      document.getElementById('chocobi-target').style.display = 'none';
+    }
 
+    function startGame() {
+      score = 0;
+      timeLeft = 15;
+      isPlaying = true;
+      document.getElementById('score-val').innerText = score;
+      document.getElementById('time-val').innerText = timeLeft;
+      document.getElementById('btn-start-game').style.display = 'none';
+      document.getElementById('chocobi-target').style.display = 'flex';
+      moveChocobi();
+
+      if (gameTimer) clearInterval(gameTimer);
+      gameTimer = setInterval(function() {
+        timeLeft--;
+        document.getElementById('time-val').innerText = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(gameTimer);
+          gameTimer = null;
+          isPlaying = false;
+          document.getElementById('chocobi-target').style.display = 'none';
+          alert('¡Tiempo terminado Karla! Conseguiste ' + score + ' Chocobis 🦖🍪');
+          document.getElementById('btn-start-game').style.display = 'flex';
+          document.getElementById('btn-start-game').innerText = '¡Jugar otra vez!';
+        }
+      }, 1000);
+    }
+
+    function moveChocobi() {
+      var box = document.getElementById('game-box');
+      var target = document.getElementById('chocobi-target');
+      var maxX = box.clientWidth - 50;
+      var maxY = box.clientHeight - 50;
+
+      var randomX = Math.max(10, Math.floor(Math.random() * maxX));
+      var randomY = Math.max(10, Math.floor(Math.random() * maxY));
+
+      target.style.left = randomX + 'px';
+      target.style.top = randomY + 'px';
+    }
+
+    function catchChocobi() {
+      if (!isPlaying) return;
+      score++;
+      document.getElementById('score-val').innerText = score;
+      moveChocobi();
+    }
+  </script>
 </body>
 </html>
