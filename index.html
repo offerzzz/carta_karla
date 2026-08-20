@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>El rincón de Shin-Chan & Karla</title>
   <style>
     :root {
@@ -20,6 +20,7 @@
 
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
 
@@ -27,16 +28,16 @@
       min-height: 100vh;
       margin: 0;
       background: radial-gradient(circle at center, #ffe0e9 0%, #ffb7c5 100%);
-      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', cursive, sans-serif;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', -apple-system, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px 16px;
+      padding: 12px;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Fondo con estrellas y corazones animados */
+    /* Fondo con estrellas y corazones flotantes */
     .bg-elements {
       position: fixed;
       top: 0;
@@ -49,7 +50,7 @@
     }
     .floating-item {
       position: absolute;
-      bottom: -60px;
+      bottom: -40px;
       animation: floatUp linear infinite;
     }
     @keyframes floatUp {
@@ -65,15 +66,15 @@
       }
     }
 
-    /* Tarjeta estilo cómic */
+    /* Tarjeta principal responsiva */
     .card-container {
       width: 100%;
-      max-width: 580px;
+      max-width: 520px;
       background: #ffffff;
-      border: 5px solid var(--shin-ink);
-      border-radius: 32px;
-      padding: 26px 20px;
-      box-shadow: 10px 10px 0px var(--shin-ink);
+      border: 4px solid var(--shin-ink);
+      border-radius: 28px;
+      padding: 20px 16px;
+      box-shadow: 6px 6px 0px var(--shin-ink);
       position: relative;
       z-index: 10;
       text-align: center;
@@ -88,70 +89,70 @@
     }
 
     @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.92); }
+      0% { opacity: 0; transform: scale(0.94); }
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* Avatares CSS de Shin-chan */
+    /* Shin-chan Avatar Principal */
     .shinchan-avatar {
-      width: 130px;
-      height: 130px;
-      margin: 0 auto 10px;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 8px;
       position: relative;
       cursor: pointer;
       transition: transform 0.2s;
     }
-    .shinchan-avatar:hover {
-      transform: scale(1.08) rotate(3deg);
+    .shinchan-avatar:active {
+      transform: scale(0.95);
     }
     .shin-head {
-      width: 105px;
-      height: 85px;
+      width: 95px;
+      height: 78px;
       background: var(--shin-skin);
-      border: 4px solid var(--shin-ink);
+      border: 3.5px solid var(--shin-ink);
       border-radius: 50% 60% 45% 65% / 60% 50% 65% 50%;
       position: absolute;
-      top: 20px;
+      top: 18px;
       left: 12px;
       z-index: 2;
     }
     .shin-hair {
       position: absolute;
-      top: 14px;
+      top: 13px;
       left: 10px;
-      width: 110px;
-      height: 52px;
+      width: 100px;
+      height: 48px;
       background: var(--shin-ink);
       border-radius: 60% 60% 20% 20%;
       z-index: 1;
     }
     .shin-eyebrow-l, .shin-eyebrow-r {
       position: absolute;
-      width: 26px;
-      height: 13px;
+      width: 24px;
+      height: 12px;
       background: var(--shin-ink);
       border-radius: 12px 12px 0 0;
-      top: 24px;
+      top: 22px;
       z-index: 3;
     }
-    .shin-eyebrow-l { left: 28px; transform: rotate(-10deg); }
-    .shin-eyebrow-r { left: 66px; transform: rotate(10deg); }
+    .shin-eyebrow-l { left: 24px; transform: rotate(-10deg); }
+    .shin-eyebrow-r { left: 60px; transform: rotate(10deg); }
     .shin-eye-l, .shin-eye-r {
       position: absolute;
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       background: var(--shin-ink);
       border-radius: 50%;
-      top: 42px;
+      top: 38px;
       z-index: 3;
     }
-    .shin-eye-l { left: 36px; }
-    .shin-eye-r { left: 70px; }
+    .shin-eye-l { left: 32px; }
+    .shin-eye-r { left: 64px; }
     .shin-eye-l::after, .shin-eye-r::after {
       content: '';
       position: absolute;
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       background: #fff;
       border-radius: 50%;
       top: 2px;
@@ -159,146 +160,78 @@
     }
     .shin-blush-l, .shin-blush-r {
       position: absolute;
-      width: 18px;
-      height: 10px;
+      width: 16px;
+      height: 9px;
       background: #ff758f;
       border-radius: 50%;
-      top: 54px;
+      top: 50px;
       z-index: 3;
       opacity: 0.7;
     }
-    .shin-blush-l { left: 20px; }
-    .shin-blush-r { left: 80px; }
+    .shin-blush-l { left: 18px; }
+    .shin-blush-r { left: 72px; }
     .shin-mouth {
       position: absolute;
-      width: 16px;
-      height: 10px;
+      width: 15px;
+      height: 9px;
       border-bottom: 3px solid var(--shin-ink);
       border-radius: 0 0 10px 10px;
-      top: 56px;
-      left: 52px;
+      top: 52px;
+      left: 48px;
       z-index: 3;
       transition: all 0.1s;
     }
 
-    /* Estado sorprendido para el juego */
+    /* Animación de sorpresa en juego */
     .shinchan-avatar.surprised .shin-eye-l,
     .shinchan-avatar.surprised .shin-eye-r {
-      transform: scale(1.4);
+      transform: scale(1.35);
       background: #fff;
-      border: 3px solid var(--shin-ink);
+      border: 2.5px solid var(--shin-ink);
     }
     .shinchan-avatar.surprised .shin-eye-l::after,
     .shinchan-avatar.surprised .shin-eye-r::after {
       background: var(--shin-ink);
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       top: 2px;
       left: 2px;
     }
     .shinchan-avatar.surprised .shin-mouth {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       background: #ff4d6d;
       border: 2px solid var(--shin-ink);
       border-radius: 50%;
-      top: 54px;
+      top: 50px;
     }
     .shinchan-avatar.surprised .shin-eyebrow-l {
-      transform: translateY(-8px) rotate(-18deg);
+      transform: translateY(-6px) rotate(-16deg);
     }
     .shinchan-avatar.surprised .shin-eyebrow-r {
-      transform: translateY(-8px) rotate(18deg);
-    }
-
-    /* Mini Shin-chan apuntando en la sección de estudio */
-    .mini-shin-box {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .mini-shin {
-      width: 70px;
-      height: 70px;
-      position: relative;
-      flex-shrink: 0;
-    }
-    .mini-shin .shin-head {
-      width: 58px;
-      height: 48px;
-      top: 10px;
-      left: 6px;
-      border-width: 3px;
-    }
-    .mini-shin .shin-hair {
-      width: 60px;
-      height: 30px;
-      top: 7px;
-      left: 5px;
-    }
-    .mini-shin .shin-eyebrow-l, .mini-shin .shin-eyebrow-r {
-      width: 14px;
-      height: 7px;
-      top: 12px;
-    }
-    .mini-shin .shin-eyebrow-l { left: 14px; }
-    .mini-shin .shin-eyebrow-r { left: 36px; }
-    .mini-shin .shin-eye-l, .mini-shin .shin-eye-r {
-      width: 9px;
-      height: 9px;
-      top: 22px;
-    }
-    .mini-shin .shin-eye-l { left: 20px; }
-    .mini-shin .shin-eye-r { left: 38px; }
-    .mini-shin .shin-blush-l, .mini-shin .shin-blush-r {
-      width: 10px;
-      height: 6px;
-      top: 30px;
-    }
-    .mini-shin .shin-blush-l { left: 10px; }
-    .mini-shin .shin-blush-r { left: 44px; }
-    .mini-shin .shin-mouth {
-      width: 10px;
-      height: 6px;
-      top: 31px;
-      left: 28px;
-    }
-
-    /* Gesto: Mano apuntando */
-    .mini-hand-pointer {
-      position: absolute;
-      right: -8px;
-      top: 32px;
-      font-size: 1.4rem;
-      z-index: 5;
-      animation: pointRigth 0.6s infinite alternate ease-in-out;
-    }
-    @keyframes pointRigth {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(6px); }
+      transform: translateY(-6px) rotate(16deg);
     }
 
     /* Bocadillo */
     .speech-bubble {
       background: var(--shin-pink-card);
-      border: 4px solid var(--shin-ink);
-      border-radius: 22px;
-      padding: 14px 18px;
-      font-size: 1.1rem;
+      border: 3.5px solid var(--shin-ink);
+      border-radius: 20px;
+      padding: 12px 14px;
+      font-size: 1rem;
       font-weight: 900;
       color: var(--shin-ink);
       position: relative;
-      margin: 12px auto 18px;
-      box-shadow: 4px 4px 0px var(--shin-ink);
+      margin: 10px auto 16px;
+      box-shadow: 3px 3px 0px var(--shin-ink);
     }
     .speech-bubble::after {
       content: '';
       position: absolute;
-      top: -16px;
+      top: -14px;
       left: 50%;
       transform: translateX(-50%);
-      border-width: 0 14px 16px 14px;
+      border-width: 0 12px 14px 12px;
       border-style: solid;
       border-color: var(--shin-pink-card) transparent;
       display: block;
@@ -308,10 +241,10 @@
     .speech-bubble::before {
       content: '';
       position: absolute;
-      top: -21px;
+      top: -18px;
       left: 50%;
       transform: translateX(-50%);
-      border-width: 0 17px 20px 17px;
+      border-width: 0 15px 18px 15px;
       border-style: solid;
       border-color: var(--shin-ink) transparent;
       display: block;
@@ -319,31 +252,28 @@
       z-index: 1;
     }
 
-    /* Botones */
+    /* Botones adaptados para móvil */
     .btn-shin {
       width: 100%;
-      padding: 14px 18px;
-      margin: 10px 0;
-      font-size: 1.05rem;
+      padding: 14px 16px;
+      margin: 8px 0;
+      font-size: 1rem;
       font-weight: 900;
       color: var(--shin-ink);
       background: var(--shin-yellow);
-      border: 4px solid var(--shin-ink);
-      border-radius: 20px;
-      box-shadow: 5px 5px 0px var(--shin-ink);
+      border: 3.5px solid var(--shin-ink);
+      border-radius: 18px;
+      box-shadow: 4px 4px 0px var(--shin-ink);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       transition: all 0.1s ease;
-    }
-    .btn-shin:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 7px 7px 0px var(--shin-ink);
+      touch-action: manipulation;
     }
     .btn-shin:active {
-      transform: translate(3px, 3px);
+      transform: translate(2px, 2px);
       box-shadow: 1px 1px 0px var(--shin-ink);
     }
     .btn-pink { background: #ff8fa3; color: white; }
@@ -351,25 +281,26 @@
     .btn-blue { background: var(--shin-blue); color: var(--shin-ink); }
     .btn-green { background: var(--shin-green); color: white; }
     .btn-back {
-      background: #eee;
+      background: #f0f0f0;
       width: auto;
       display: inline-flex;
-      padding: 8px 20px;
+      padding: 10px 22px;
       font-size: 0.95rem;
-      margin-top: 15px;
+      margin-top: 14px;
     }
 
     /* Juego */
     .game-area {
-      height: 230px;
+      height: 220px;
       background: #f8f9fa;
-      border: 4px solid var(--shin-ink);
+      border: 3.5px solid var(--shin-ink);
       border-radius: 18px;
       position: relative;
       overflow: hidden;
-      margin: 12px 0;
+      margin: 10px 0;
       background-image: radial-gradient(#ffccd5 15%, transparent 16%);
-      background-size: 20px 20px;
+      background-size: 18px 18px;
+      touch-action: none;
     }
     .chocobi-box {
       width: 48px;
@@ -386,50 +317,131 @@
       box-shadow: 3px 3px 0px var(--shin-ink);
     }
 
-    /* Tarjetas de Mecatrónica */
+    /* Tarjetas de Estudio Responsivas */
+    .study-scroll {
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mini-shin-box {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .mini-shin {
+      width: 55px;
+      height: 60px;
+      position: relative;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .mini-shin .shin-head {
+      width: 46px;
+      height: 38px;
+      top: 8px;
+      left: 4px;
+      border-width: 2.5px;
+    }
+    .mini-shin .shin-hair {
+      width: 48px;
+      height: 24px;
+      top: 5px;
+      left: 3px;
+    }
+    .mini-shin .shin-eyebrow-l, .mini-shin .shin-eyebrow-r {
+      width: 11px;
+      height: 6px;
+      top: 10px;
+    }
+    .mini-shin .shin-eyebrow-l { left: 10px; }
+    .mini-shin .shin-eyebrow-r { left: 28px; }
+    .mini-shin .shin-eye-l, .mini-shin .shin-eye-r {
+      width: 7px;
+      height: 7px;
+      top: 17px;
+    }
+    .mini-shin .shin-eye-l { left: 15px; }
+    .mini-shin .shin-eye-r { left: 30px; }
+    .mini-shin .shin-blush-l, .mini-shin .shin-blush-r {
+      width: 8px;
+      height: 5px;
+      top: 24px;
+    }
+    .mini-shin .shin-blush-l { left: 8px; }
+    .mini-shin .shin-blush-r { left: 35px; }
+    .mini-shin .shin-mouth {
+      width: 8px;
+      height: 5px;
+      top: 25px;
+      left: 22px;
+    }
+    .mini-hand-pointer {
+      position: absolute;
+      right: -6px;
+      bottom: 2px;
+      font-size: 1.2rem;
+      z-index: 5;
+    }
+
     .circuit-card {
       flex-grow: 1;
       background: #fff;
       border: 3px solid var(--shin-ink);
-      border-radius: 16px;
-      padding: 12px 14px;
+      border-radius: 14px;
+      padding: 10px 12px;
       text-align: left;
-      box-shadow: 4px 4px 0px var(--shin-pink-accent);
+      box-shadow: 3px 3px 0px var(--shin-pink-accent);
     }
     .circuit-title {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 900;
       color: var(--shin-red);
       margin-bottom: 4px;
     }
     .circuit-desc {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: #333;
       line-height: 1.35;
     }
     .circuit-formula {
       background: #f0f3f6;
-      border: 2px dashed var(--shin-ink);
+      border: 1.5px dashed var(--shin-ink);
       border-radius: 8px;
       padding: 6px 8px;
       margin-top: 6px;
-      font-family: monospace;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       font-size: 0.82rem;
       color: #0b525b;
-      line-height: 1.3;
+      line-height: 1.45;
+    }
+    .circuit-formula b {
+      color: #000;
     }
 
-    /* Tarjeta del autor */
+    /* Autor */
     .author-badge {
       background: var(--shin-yellow);
       border: 4px solid var(--shin-ink);
       border-radius: 20px;
-      padding: 22px;
-      font-size: 1.35rem;
+      padding: 18px 14px;
+      font-size: 1.25rem;
       font-weight: 900;
       color: var(--shin-ink);
-      box-shadow: 6px 6px 0px var(--shin-pink-accent);
-      margin: 20px 0;
+      box-shadow: 5px 5px 0px var(--shin-pink-accent);
+      margin: 16px 0;
+    }
+
+    /* Optimización para móviles pequeños */
+    @media (max-width: 400px) {
+      .card-container { padding: 16px 12px; }
+      .speech-bubble { font-size: 0.92rem; }
+      .btn-shin { font-size: 0.95rem; padding: 12px 14px; }
+      .mini-shin { display: none; } /* Oculta miniatura en pantallas muy estrechas para dar espacio al texto */
     }
   </style>
 </head>
@@ -442,19 +454,19 @@
     
     <!-- PANTALLA 1: INICIO -->
     <div id="screen-start" class="screen active">
-      <div style="font-size: 3.2rem; margin-bottom: 8px;">🎁</div>
-      <h2 style="color: var(--shin-pink-accent); -webkit-text-stroke: 1px var(--shin-ink); font-size: 1.7rem; margin: 0 0 10px;">
+      <div style="font-size: 3rem; margin-bottom: 6px;">🎁</div>
+      <h2 style="color: var(--shin-pink-accent); -webkit-text-stroke: 1px var(--shin-ink); font-size: 1.6rem; margin: 0 0 8px;">
         ¡Tienes una sorpresa!
       </h2>
-      <p style="font-weight: bold; color: #555; margin-bottom: 20px;">
-        Haz clic en el botón de abajo para descubrir quién vino a visitarte:
+      <p style="font-weight: bold; color: #555; margin-bottom: 18px; font-size: 0.95rem;">
+        Toca el botón de abajo para descubrir quién vino a visitarte:
       </p>
       <button class="btn-shin btn-pink" onclick="changeScreen('screen-greeting')">
         <span>👉</span> ¡Toca aquí! <span>✨</span>
       </button>
     </div>
 
-    <!-- PANTALLA 2: SALUDO -->
+    <!-- PANTALLA 2: SALUDO DE SHIN-CHAN -->
     <div id="screen-greeting" class="screen">
       <div class="shinchan-avatar" onclick="changeScreen('screen-menu')">
         <div class="shin-hair"></div>
@@ -480,7 +492,7 @@
 
     <!-- PANTALLA 3: MENÚ PRINCIPAL -->
     <div id="screen-menu" class="screen">
-      <h2 style="color: var(--shin-red); margin: 0 0 15px; text-shadow: 2px 2px 0px var(--shin-yellow); font-size: 1.6rem;">
+      <h2 style="color: var(--shin-red); margin: 0 0 14px; text-shadow: 2px 2px 0px var(--shin-yellow); font-size: 1.5rem;">
         ¿Qué hacemos, Karla?
       </h2>
 
@@ -497,10 +509,9 @@
       </button>
     </div>
 
-    <!-- PANTALLA 4: MINI JUEGO CON SHIN-CHAN REACTIVO -->
+    <!-- PANTALLA 4: MINI JUEGO -->
     <div id="screen-game" class="screen">
-      <!-- Shin-chan con reacción de sorpresa -->
-      <div id="game-shin-avatar" class="shinchan-avatar" style="transform: scale(0.85); margin: -5px auto 5px;">
+      <div id="game-shin-avatar" class="shinchan-avatar" style="transform: scale(0.8); margin: -8px auto 0;">
         <div class="shin-hair"></div>
         <div class="shin-head">
           <div class="shin-eyebrow-l"></div>
@@ -513,7 +524,7 @@
         </div>
       </div>
 
-      <div style="display: flex; justify-content: space-around; font-weight: 900; margin-bottom: 5px;">
+      <div style="display: flex; justify-content: space-around; font-weight: 900; margin-bottom: 4px; font-size: 0.95rem;">
         <span style="color: var(--shin-red);">Puntos: <span id="score-val">0</span> 🦖</span>
         <span style="color: var(--shin-blue);">Tiempo: <span id="time-val">15</span>s ⏱</span>
       </div>
@@ -531,15 +542,15 @@
       </button>
     </div>
 
-    <!-- PANTALLA 5: ESTUDIEMOS JUNTOS (PEDAGOGÍA DE LA MECATRÓNICA) -->
+    <!-- PANTALLA 5: ESTUDIEMOS JUNTOS (FÓRMULAS LIMPIAS EN ESPAÑOL) -->
     <div id="screen-study" class="screen">
-      <div class="speech-bubble" style="font-size: 0.95rem; padding: 10px; margin: 0 0 14px;">
-        "¡Nivelación de Mecatrónica lista! Repasemos la teoría de circuitos con el Prof. Shinnosuke ⚡"
+      <div class="speech-bubble" style="font-size: 0.9rem; padding: 8px 12px; margin: 0 0 12px;">
+        "¡Nivelación de Mecatrónica! Repasemos circuitos eléctricos con el Prof. Shinnosuke ⚡"
       </div>
 
-      <div style="max-height: 310px; overflow-y: auto; padding-right: 4px;">
+      <div class="study-scroll">
         
-        <!-- 1. Circuito en Serie (Shin-chan Concentrado) -->
+        <!-- 1. SERIE -->
         <div class="mini-shin-box">
           <div class="mini-shin">
             <div class="shin-hair"></div>
@@ -557,18 +568,18 @@
           <div class="circuit-card">
             <div class="circuit-title">1. Circuito en Serie (Malla Única)</div>
             <div class="circuit-desc">
-              Existe un único camino cerrado. La intensidad de corriente ($I$) es constante en toda la rama.
+              Existe un único camino para la corriente. La intensidad (I) es exactamente igual en todos los elementos.
             </div>
             <div class="circuit-formula">
-              • $I_{total} = I_1 = I_2 = \dots = I_n$<br>
-              • $V_{total} = V_1 + V_2 + \dots + V_n$ (Ley de Kirchhoff de Voltajes / LKV)<br>
-              • $R_{eq} = R_1 + R_2 + \dots + R_n$<br>
-              • <strong>Divisor de Tensión:</strong> $V_x = V_T \cdot \frac{R_x}{R_{eq}}$
+              • <b>Corriente:</b> I<sub>total</sub> = I<sub>1</sub> = I<sub>2</sub> = ... = I<sub>n</sub><br>
+              • <b>Voltaje (LKV):</b> V<sub>total</sub> = V<sub>1</sub> + V<sub>2</sub> + ... + V<sub>n</sub><br>
+              • <b>Resistencia equivalente:</b> R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub> + ... + R<sub>n</sub><br>
+              • <b>Divisor de Tensión:</b> V<sub>x</sub> = V<sub>total</sub> · (R<sub>x</sub> / R<sub>eq</sub>)
             </div>
           </div>
         </div>
 
-        <!-- 2. Circuito en Paralelo (Shin-chan Guiñando un Ojo) -->
+        <!-- 2. PARALELO -->
         <div class="mini-shin-box">
           <div class="mini-shin">
             <div class="shin-hair"></div>
@@ -576,8 +587,7 @@
               <div class="shin-eyebrow-l"></div>
               <div class="shin-eyebrow-r" style="transform: translateY(2px) rotate(15deg);"></div>
               <div class="shin-eye-l"></div>
-              <!-- Ojo guiñado -->
-              <div style="position:absolute; width:10px; height:3px; background:#111; top:24px; left:38px; z-index:3;"></div>
+              <div style="position:absolute; width:8px; height:3px; background:#111; top:19px; left:30px; z-index:3;"></div>
               <div class="shin-blush-l"></div>
               <div class="shin-blush-r"></div>
               <div class="shin-mouth" style="border-radius: 50%;"></div>
@@ -587,18 +597,19 @@
           <div class="circuit-card">
             <div class="circuit-title">2. Circuito en Paralelo (Nodos Comunes)</div>
             <div class="circuit-desc">
-              Los terminales se unen a dos nodos principales. El voltaje ($V$) es exactamente el mismo en todas las ramas.
+              Los terminales se conectan a dos puntos comunes. Todos los componentes tienen el mismo voltaje (V).
             </div>
             <div class="circuit-formula">
-              • $V_{total} = V_1 = V_2 = \dots = V_n$<br>
-              • $I_{total} = I_1 + I_2 + \dots + I_n$ (Ley de Kirchhoff de Corrientes / LKC)<br>
-              • $\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \dots + \frac{1}{R_n}$ (Para 2: $R_{eq} = \frac{R_1 \cdot R_2}{R_1 + R_2}$)<br>
-              • <strong>Divisor de Corriente:</strong> $I_1 = I_T \cdot \frac{R_2}{R_1 + R_2}$
+              • <b>Voltaje:</b> V<sub>total</sub> = V<sub>1</sub> = V<sub>2</sub> = ... = V<sub>n</sub><br>
+              • <b>Corriente (LKC):</b> I<sub>total</sub> = I<sub>1</sub> + I<sub>2</sub> + ... + I<sub>n</sub><br>
+              • <b>Resistencia eq:</b> 1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + ... + 1/R<sub>n</sub><br>
+              • <b>Fórmula para 2 resistencias:</b> R<sub>eq</sub> = (R<sub>1</sub> · R<sub>2</sub>) / (R<sub>1</sub> + R<sub>2</sub>)<br>
+              • <b>Divisor de Corriente:</b> I<sub>1</sub> = I<sub>total</sub> · [R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)]
             </div>
           </div>
         </div>
 
-        <!-- 3. Circuito Mixto (Shin-chan con Gafas de Profe) -->
+        <!-- 3. MIXTO -->
         <div class="mini-shin-box">
           <div class="mini-shin">
             <div class="shin-hair"></div>
@@ -607,8 +618,7 @@
               <div class="shin-eyebrow-r"></div>
               <div class="shin-eye-l"></div>
               <div class="shin-eye-r"></div>
-              <!-- Gafas mini -->
-              <div style="position:absolute; width:44px; height:14px; border:2px solid #111; top:20px; left:12px; z-index:4; background:rgba(255,255,255,0.4); border-radius:3px;"></div>
+              <div style="position:absolute; width:36px; height:12px; border:2px solid #111; top:15px; left:9px; z-index:4; background:rgba(255,255,255,0.4); border-radius:3px;"></div>
               <div class="shin-blush-l"></div>
               <div class="shin-blush-r"></div>
               <div class="shin-mouth"></div>
@@ -618,12 +628,12 @@
           <div class="circuit-card">
             <div class="circuit-title">3. Circuito Mixto (Análisis de Redes)</div>
             <div class="circuit-desc">
-              Topología combinada. Se resuelve mediante el método de simplificación sucesiva o análisis de mallas y nodos.
+              Combinación de serie y paralelo en una sola red. Se resuelve reduciendo partes paso a paso.
             </div>
             <div class="circuit-formula">
-              • <strong>Paso 1:</strong> Identificar nodos y mallas independientes.<br>
-              • <strong>Paso 2:</strong> Reducir ramas en paralelo o serie más internas a $R_{eq(i)}$.<br>
-              • <strong>Paso 3:</strong> Aplicar Ley de Ohm ($V = I \cdot R$) desde el circuito equivalente total hacia atrás.
+              • <b>Paso 1:</b> Identificar qué ramas están estrictamente en serie o en paralelo.<br>
+              • <b>Paso 2:</b> Reducir los bloques internos a resistencias equivalentes parciales.<br>
+              • <b>Paso 3:</b> Aplicar Ley de Ohm (V = I · R) en el circuito simplificado total.
             </div>
           </div>
         </div>
@@ -644,16 +654,16 @@
           <div class="shin-eyebrow-r"></div>
           <div class="shin-eye-l"></div>
           <div class="shin-eye-r"></div>
-          <div class="shin-blush-l" style="width: 22px; height: 14px; background: #ff4d6d;"></div>
-          <div class="shin-blush-r" style="width: 22px; height: 14px; background: #ff4d6d;"></div>
+          <div class="shin-blush-l" style="width: 20px; height: 12px; background: #ff4d6d;"></div>
+          <div class="shin-blush-r" style="width: 20px; height: 12px; background: #ff4d6d;"></div>
           <div class="shin-mouth" style="border-radius: 50%;"></div>
         </div>
       </div>
 
       <div class="author-badge">
-        <div style="font-size: 2.2rem; margin-bottom: 8px;">💌 ✨</div>
+        <div style="font-size: 2rem; margin-bottom: 6px;">💌 ✨</div>
         Hecho con cariño por Offer
-        <div style="font-size: 0.95rem; margin-top: 8px; font-weight: normal; color: #444;">
+        <div style="font-size: 0.9rem; margin-top: 6px; font-weight: normal; color: #444;">
           ¡Para alegrarte el día y que te vaya excelente en Mecatrónica! 🦖🎈
         </div>
       </div>
@@ -666,24 +676,24 @@
   </div>
 
   <script>
-    /* Generador de estrellas y corazones flotantes de fondo */
+    /* Elementos flotantes */
     function createFloatingDecorations() {
       const container = document.getElementById('bg-elements');
       const icons = ['⭐', '💖', '✨', '🌸', '🦖', '💕'];
-      for (let i = 0; i < 16; i++) {
+      for (let i = 0; i < 14; i++) {
         const item = document.createElement('div');
         item.className = 'floating-item';
         item.innerText = icons[Math.floor(Math.random() * icons.length)];
-        item.style.left = Math.random() * 95 + '%';
-        item.style.fontSize = (Math.random() * 1.4 + 1.2) + 'rem';
-        item.style.animationDuration = (Math.random() * 6 + 6) + 's';
+        item.style.left = Math.random() * 92 + '%';
+        item.style.fontSize = (Math.random() * 1.2 + 1) + 'rem';
+        item.style.animationDuration = (Math.random() * 5 + 6) + 's';
         item.style.animationDelay = (Math.random() * 5) + 's';
         container.appendChild(item);
       }
     }
     createFloatingDecorations();
 
-    /* Navegación entre pantallas */
+    /* Control de pantallas */
     var gameTimer = null;
     var score = 0;
     var timeLeft = 15;
@@ -749,14 +759,13 @@
       var maxX = box.clientWidth - 55;
       var maxY = box.clientHeight - 55;
 
-      var randomX = Math.max(10, Math.floor(Math.random() * maxX));
-      var randomY = Math.max(10, Math.floor(Math.random() * maxY));
+      var randomX = Math.max(8, Math.floor(Math.random() * maxX));
+      var randomY = Math.max(8, Math.floor(Math.random() * maxY));
 
       target.style.left = randomX + 'px';
       target.style.top = randomY + 'px';
     }
 
-    /* Shin-chan se sorprende al hacer clic */
     function catchChocobi() {
       if (!isPlaying) return;
       score++;
@@ -766,7 +775,7 @@
       avatar.classList.add('surprised');
       setTimeout(function() {
         avatar.classList.remove('surprised');
-      }, 350);
+      }, 300);
 
       moveChocobi();
     }
